@@ -1,0 +1,89 @@
+{% extends "basic/layout.html" %}
+
+{%- block extrahead %}
+  <!-- fonts -->
+  <link href='https://fonts.googleapis.com/css?family=Droid+Sans:400,700|Droid+Serif|Inconsolata:400,700' rel='stylesheet' type='text/css'>             
+{% endblock %}
+
+{% block relbar1 %} 
+{% endblock %} 
+
+{% block relbar2 %} 
+{% endblock %}
+{%- block header %}
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-push-2 col-lg-8 col-md-push-1 col-md-10 col-sm-12">
+        <div class="row">
+          <div class="col-md-push-1 col-md-10 col-sm-12">
+            <div class="header">
+              <h1 class="title">{{ project }}
+                <small>
+                  <ul class="menu">
+                    <li><a href="/">home</a></li>
+                    <li><a href="/search.html">search</a></li>
+                  </ul>
+                </small>
+              </h1>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{%- block content %}
+  <div class="container sphinx">
+    <div class="row">
+      <div class="col-lg-push-2 col-lg-8 col-md-push-1 col-md-10 col-sm-12">
+        <div class="row">
+          <div class="col-md-push-1 col-md-10 col-sm-12">
+            {%- block document %}
+              {% block body %} {% endblock %}
+            {%- endblock %}
+            <hr>
+            {% if prev or next %}
+              <ul class="pager">
+                {% if prev %}
+                  <li class="previous"><a href="{{ prev.link|e }}">&larr; Previously: {{ prev.title }}</a></li>
+                {% endif %}
+                {% if next %}
+                  <li class="next"><a href="{{ next.link|e }}">Up next: {{ next.title }} &rarr;</a></li>
+                {% endif %}
+              </ul>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{%- endblock %}
+
+{%- block footer %}
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-push-2 col-lg-8 col-md-push-1 col-md-10 col-sm-12">
+        <div class="row">
+          <div class="col-md-push-1 col-md-10 col-sm-12">
+            <div class="footer" role="contentinfo">
+              {%- if show_copyright %}
+                {%- if hasdoc('copyright') %}
+                  {% trans path=pathto('copyright'), copyright=copyright|e %}&copy; <a href="{{ path }}">Copyright</a> {{ copyright }}.{% endtrans %}
+                {%- else %}
+                  {% trans copyright=copyright|e %}&copy; Copyright {{ copyright }}.{% endtrans %}
+                {%- endif %}
+              {%- endif %}
+              {%- if last_updated %}
+                {% trans last_updated=last_updated|e %}Last updated on {{ last_updated }}.{% endtrans %}
+              {%- endif %}
+              {%- if show_sphinx %}
+                {% trans sphinx_version=sphinx_version|e %}Created using <a href="http://sphinx-doc.org/">Sphinx</a> {{ sphinx_version }}.{% endtrans %}
+              {%- endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{%- endblock %}
